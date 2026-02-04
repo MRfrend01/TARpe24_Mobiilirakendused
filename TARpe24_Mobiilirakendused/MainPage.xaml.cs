@@ -17,8 +17,45 @@
                 CounterBtn.Text = $"Clicked {count} time";
             else
                 CounterBtn.Text = $"Clicked {count} times";
+            BotImage.Rotation += 20;
+            var rnd = new Random();
+            var rndColor = Color.FromRgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
+            BackgroundColor = rndColor;//
+            if (count >= 10)
+            {
+                BotImage.IsVisible = false; // Peidab pildi
+                CounterLabel.Text = "Pilt kadus ära! Vajuta Reset.";
+            }
+            // Kui loendur on 5 või rohkem, muuda nupu värvi
+            if (count >= 5)
+            {
+                CounterBtn.BackgroundColor = Colors.Red;
+                CounterBtn.TextColor = Colors.White;
+            }
+
 
             SemanticScreenReader.Announce(CounterBtn.Text);
+        }
+
+        private void ResetBtn_Clicked(object sender, EventArgs e)
+        {
+            count = 0;
+            CounterBtn.Text = "alustame uuesti!";
+            BotImage.Rotation = 0;//lähtestab pildi pöörde
+            BotImage.IsVisible = true; // Toob pildi tagasi
+
+            // Liigutame pildi paremasse serva
+            BotImage.HorizontalOptions = LayoutOptions.End;
+
+            // VÕI teeme loogika: kui on vasakul, liiguta paremale, ja vastupidi
+            if (BotImage.HorizontalOptions == LayoutOptions.Start)
+            {
+                BotImage.HorizontalOptions = LayoutOptions.End;
+            }
+            else
+            {
+                BotImage.HorizontalOptions = LayoutOptions.Start;
+            }
         }
     }
 }
